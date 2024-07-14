@@ -72,11 +72,136 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1138c0ed02481e842b7e9fdaf60d5713,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4662134817001810156}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1138c0ed02481e842b7e9fdaf60d5713,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5035800342553086149}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1138c0ed02481e842b7e9fdaf60d5713,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4648933496465918102}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1138c0ed02481e842b7e9fdaf60d5713,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5247397140780922304}
     - targetCorrespondingSourceObject: {fileID: 7408991142039834914, guid: 1138c0ed02481e842b7e9fdaf60d5713,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5035609471798275720}
   m_SourcePrefab: {fileID: 100100000, guid: 1138c0ed02481e842b7e9fdaf60d5713, type: 3}
+--- !u!1 &510819198156944809 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1138c0ed02481e842b7e9fdaf60d5713,
+    type: 3}
+  m_PrefabInstance: {fileID: 853329373746759928}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &4662134817001810156
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510819198156944809}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &5035800342553086149
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510819198156944809}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.66312623, y: 0.26161048, z: 0.3910964}
+  m_Center: {x: -0.012699261, y: 0.043785468, z: -0.038989395}
+--- !u!114 &4648933496465918102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510819198156944809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83dcd8dace8b7fe449d796b980cb121d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfSelected: 0
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeselected:
+    m_PersistentCalls:
+      m_Calls: []
+  use: 0
+  onSelectedFinger:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelectedFingerUp:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelectedSelectFinger:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelectedSelectFingerUp:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5247397140780922304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510819198156944809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eda371e5375f454490a86f21559ee38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Use:
+    Filter: 0
+    IgnoreStartedOverGui: 1
+    RequiredFingerCount: 0
+    RequiredMouseButtons: 0
+    RequiredSelectable: {fileID: 4648933496465918102}
+  _camera: {fileID: 0}
+  sensitivity: 1
+  damping: -1
+  inertia: 0
+  remainingTranslation: {x: 0, y: 0, z: 0}
 --- !u!1 &7855866249087670746 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7408991142039834914, guid: 1138c0ed02481e842b7e9fdaf60d5713,

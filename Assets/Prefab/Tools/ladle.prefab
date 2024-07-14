@@ -72,11 +72,80 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 49e6b66beffa25f4fadb44a9e7530f57,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2952802415331183733}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 49e6b66beffa25f4fadb44a9e7530f57,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 613187972300775943}
     - targetCorrespondingSourceObject: {fileID: -6139321390025033675, guid: 49e6b66beffa25f4fadb44a9e7530f57,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7417845501171947096}
   m_SourcePrefab: {fileID: 100100000, guid: 49e6b66beffa25f4fadb44a9e7530f57, type: 3}
+--- !u!1 &6811013588809412363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 49e6b66beffa25f4fadb44a9e7530f57,
+    type: 3}
+  m_PrefabInstance: {fileID: 5928141272762733146}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2952802415331183733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6811013588809412363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83dcd8dace8b7fe449d796b980cb121d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfSelected: 0
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeselected:
+    m_PersistentCalls:
+      m_Calls: []
+  use: 0
+  onSelectedFinger:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelectedFingerUp:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelectedSelectFinger:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelectedSelectFingerUp:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &613187972300775943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6811013588809412363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eda371e5375f454490a86f21559ee38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Use:
+    Filter: 0
+    IgnoreStartedOverGui: 1
+    RequiredFingerCount: 0
+    RequiredMouseButtons: 0
+    RequiredSelectable: {fileID: 2952802415331183733}
+  _camera: {fileID: 0}
+  sensitivity: 1
+  damping: -1
+  inertia: 0
+  remainingTranslation: {x: 0, y: 0, z: 0}
 --- !u!1 &8685265192663345775 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6139321390025033675, guid: 49e6b66beffa25f4fadb44a9e7530f57,
