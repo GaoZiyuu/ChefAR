@@ -8,19 +8,18 @@ public class DishRandomiser : MonoBehaviour
 {
     public Button randomizeButton; // Reference to the button
     public Button nextButton; // Reference to the next button
-    public TextMeshProUGUI displayText; // Reference to the text UI element
     public Image displayImage; // Reference to the image UI element
 
     // Arrays to hold the text strings and corresponding images
-    private string[] texts = { "Monster Curry Combo", "Pork Katsu", "Mango Honey Toast" };
-    private Sprite[] images = new Sprite[3];
+    private Sprite[] images = new Sprite[4];
 
     void Start()
     {
         // Load the images from Resources folder
-        images[0] = Resources.Load<Sprite>("DishImage/MCC");
-        images[1] = Resources.Load<Sprite>("DishImage/PK");
-        images[2] = Resources.Load<Sprite>("DishImage/MHT");
+        images[0] = Resources.Load<Sprite>("DishImage/CKC");
+        images[1] = Resources.Load<Sprite>("DishImage/PKC");
+        images[2] = Resources.Load<Sprite>("DishImage/EFC");
+        images[3] = Resources.Load<Sprite>("DishImage/FFC");
 
         // Check if images are loaded correctly
         for (int i = 0; i < images.Length; i++)
@@ -42,10 +41,9 @@ public class DishRandomiser : MonoBehaviour
     void Randomize()
     {
         // Generate a random index
-        int randomIndex = Random.Range(0, texts.Length);
+        int randomIndex = Random.Range(0, images.Length);
 
         // Update the text and image to match the random index
-        displayText.text = texts[randomIndex];
         displayImage.sprite = images[randomIndex];
 
         // Show the next button
