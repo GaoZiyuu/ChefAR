@@ -23,40 +23,44 @@ public class RawFoodTray : MonoBehaviour
     //gameobject button
     public GameObject doneButton;
 
-    void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        GameObject collidedObject = collision.gameObject;
+        GameObject collidedObject = other.gameObject;
+
+        // Log the name of the collided object
+        Debug.Log("Collided with: " + collidedObject.name);
 
         // Check the tag of the collided object and activate the corresponding GameObject
         if (collidedObject.CompareTag("Cabbage"))
         {
             cabbage.SetActive(true);
             cabbageActivated = true;
-            Destroy(cabbage);
+            Debug.Log("Cabbage activated");
+            Destroy(collidedObject);
         }
         else if (collidedObject.CompareTag("Raddish"))
         {
             raddish.SetActive(true);
             radishActivated = true;
-            Destroy(raddish);
+            Destroy(collidedObject);
         }
         else if (collidedObject.CompareTag("Egg"))
         {
             egg.SetActive(true);
             eggActivated = true;
-            Destroy(egg);
+            Destroy(collidedObject);
         }
         else if (collidedObject.CompareTag("Rice"))
         {
             rice.SetActive(true);
             riceActivated = true;
-            Destroy(rice);
+            Destroy(collidedObject);
         }
         else if (collidedObject.CompareTag("Pork"))
         {
             pork.SetActive(true);
             porkActivated = true;
-            Destroy(pork);
+            Destroy(collidedObject);
         }
 
         // Check if all objects are activated
