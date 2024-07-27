@@ -12,6 +12,8 @@ public class DishRandomiser : MonoBehaviour
     public GameObject taskUI; // Reference to the Task UI
     public TextMeshProUGUI taskText; // Reference to the Task Text UI element
 
+    public RawFoodTray rawFoodTray; // Reference to the RawFoodTray component
+
     // Arrays to hold the text strings and corresponding images
     private Sprite[] images = new Sprite[4];
     private string[] dishNames = new string[4] { "FFC", "PKC", "CKC", "EFC" };
@@ -73,7 +75,10 @@ public class DishRandomiser : MonoBehaviour
         // Update the task text based on the current dish
         if (dishTasks.ContainsKey(currentDish))
         {
+            string task = dishTasks[currentDish];
             taskText.text = "Your Task:\n" + dishTasks[currentDish];
+            // Assuming rawFoodTray is a reference to the RawFoodTray component
+            rawFoodTray.SetCurrentTask(task);
         }
 
         // Show the task UI

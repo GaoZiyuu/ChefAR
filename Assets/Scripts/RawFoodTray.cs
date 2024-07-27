@@ -23,6 +23,22 @@ public class RawFoodTray : MonoBehaviour
     //gameobject button
     public GameObject doneButton;
 
+    // Reference to the Task Text UI element
+    public TextMeshProUGUI taskText;
+    public GameObject messageBox; // UI panel for the message box
+    public TextMeshProUGUI messageText; // UI element for showing messages
+
+    private Dictionary<string, string> dishTasks;
+    private string currentTask;
+    private Dictionary<string, int> ingredientCounters = new Dictionary<string, int>
+    {
+        { "Fish", 0 },
+        { "Pork", 0 },
+        { "Chicken", 0 },
+        { "Prawn", 0 },
+        { "Rice", 0 }
+    };
+
     private void OnTriggerEnter(Collider other)
     {
         GameObject collidedObject = other.gameObject;
@@ -63,6 +79,11 @@ public class RawFoodTray : MonoBehaviour
             Destroy(collidedObject);
         }
 
+        else
+        {
+            ShowMessage("Wrong ingredient!");
+        }
+
         // Check if all objects are activated
         if (cabbageActivated && radishActivated && eggActivated && riceActivated && porkActivated)
         {
@@ -86,11 +107,68 @@ public class RawFoodTray : MonoBehaviour
         porkActivated = false;
     }
 
+    void UpdateIngredientCounter(string ingredient)
+    {
+        if (currentTask.Contains(ingredient))
+        {
+            ingredientCounters[ingredient]++;
+            UpdateTaskText();
+        }
+        else
+        {
+            ShowMessage("Wrong ingredient! Try Again");
+        }
+    }
+
+    void UpdateTaskText()
+    {
+        // Update the task text based on the current ingredient counters
+        string[] lines = currentTask.Split('\n');
+        for (int i = 0; i < lines.Length; i++)
+        {
+            string[] parts = lines[i].Split(' ');
+            if (parts.Length == 3 && ingredientCounters.ContainsKey(parts[0]))
+            {
+                lines[i] = $"{parts[0]} - {ingredientCounters[parts[0]]}/{parts[2]}";
+            }
+        }
+        taskText.text = string.Join("\n", lines);
+    }
+
+    void ShowMessage(string message)
+    {
+        messageText.text = message;
+        messageBox.SetActive(true);
+        StartCoroutine(HideMessage());
+    }
+
+    IEnumerator HideMessage()
+    {
+        yield return new WaitForSeconds(2f);
+        messageBox.SetActive(false);
+    }
+
+    public void SetCurrentTask(string task)
+    {
+        currentTask = task;
+        taskText.text = "Your Task:\n" + task;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         DeactivateAllObjects();
         doneButton.SetActive(false);
+        messageText.gameObject.SetActive(false);
+
+        // Define tasks for each dish
+        dishTasks = new Dictionary<string, string>
+        {
+            { "FFC", "Fish - 0/1\nRice - 0/1" },
+            { "PKC", "Pork - 0/1\nRice - 0/1" },
+            { "CKC", "Chicken - 0/1\nRice - 0/1" },
+            { "EFC", "Prawn - 0/1\nRice - 0/1" }
+        };
     }
 
 }
