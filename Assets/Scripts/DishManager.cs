@@ -13,12 +13,16 @@ public class DishManager : MonoBehaviour
     public GameObject cookedFFC; // Reference to the cooked FFC GameObject
     public Button goToDoneButton; // Reference to the GoToDone button
 
+    public RawFoodTray rawFoodTray;
+    public GameObject Deco;
+    public GameObject rawFoods;
+
     private void Start()
     {
         goToDoneButton.onClick.AddListener(OnGoToDoneButtonClicked);
     }
 
-    private void OnGoToDoneButtonClicked()
+    public void OnGoToDoneButtonClicked()
     {
         string currentDish = dishRandomiser.GetCurrentDish();
 
@@ -47,5 +51,27 @@ public class DishManager : MonoBehaviour
                 Debug.LogError("Unknown dish: " + currentDish);
                 break;
         }
+        // Hide all raw food and decoration GameObjects
+        HideRawFoodAndDecorations();
+    }
+
+    public void HideRawFoodAndDecorations()
+    {
+        // Hide all raw food GameObjects from RawFoodTray
+        rawFoodTray.cabbage.SetActive(false);
+        rawFoodTray.ginger.SetActive(false);
+        rawFoodTray.egg.SetActive(false);
+        rawFoodTray.rice.SetActive(false);
+        rawFoodTray.pork.SetActive(false);
+        rawFoodTray.chicken.SetActive(false);
+        rawFoodTray.prawn.SetActive(false);
+        rawFoodTray.fish.SetActive(false);
+
+        // Hide all decoration GameObjects
+        Deco.SetActive(false);
+
+        // Hide all raw food GameObjects
+        rawFoods.SetActive(false);
+        
     }
 }

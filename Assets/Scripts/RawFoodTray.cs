@@ -8,7 +8,7 @@ public class RawFoodTray : MonoBehaviour
 {
     // GameObjects for ingredients
     public GameObject cabbage;
-    public GameObject radish;
+    public GameObject ginger;
     public GameObject egg;
     public GameObject rice;
     public GameObject pork;
@@ -18,7 +18,7 @@ public class RawFoodTray : MonoBehaviour
 
     // Booleans to check if GameObject is set active or not
     private bool cabbageActivated = false;
-    private bool radishActivated = false;
+    private bool gingerActivated = false;
     private bool eggActivated = false;
     private bool riceActivated = false;
     private bool porkActivated = false;
@@ -43,7 +43,7 @@ public class RawFoodTray : MonoBehaviour
         { "Chicken", 0 },
         { "Prawn", 0 },
         { "Cabbage", 0 },
-        { "Raddish", 0 },
+        { "Ginger", 0 },
         { "Egg", 0 },
         { "Rice", 0 }
     };
@@ -58,94 +58,76 @@ public class RawFoodTray : MonoBehaviour
         // Define tasks for each dish
         dishTasks = new Dictionary<string, string>
         {
-            { "FFC", "Fish - 0/1\nRice - 0/1\nCabbage - 0/1\nRed Raddish - 0/1\nEgg - 0/1" },
-            { "PKC", "Pork - 0/1\nRice - 0/1\nCabbage - 0/1\nRed Raddish - 0/1\nEgg - 0/1" },
-            { "CKC", "Chicken - 0/1\nRice - 0/1\nCabbage - 0/1\nRed Raddish - 0/1\nEgg - 0/1" },
-            { "EFC", "Prawn - 0/1\nRice - 0/1\nCabbage - 0/1\nRed Raddish - 0/1\nEgg - 0/1" }
+            { "FFC", "Fish - 0/1\nRice - 0/1\nCabbage - 0/1\nGinger - 0/1\nEgg - 0/1" },
+            { "PKC", "Pork - 0/1\nRice - 0/1\nCabbage - 0/1\nGinger - 0/1\nEgg - 0/1" },
+            { "CKC", "Chicken - 0/1\nRice - 0/1\nCabbage - 0/1\nGinger - 0/1\nEgg - 0/1" },
+            { "EFC", "Prawn - 0/1\nRice - 0/1\nCabbage - 0/1\nGinger - 0/1\nEgg - 0/1" }
         };
     }
 
     private void OnTriggerEnter(Collider other)
     {
         GameObject collidedObject = other.gameObject;
+        string ingredient = collidedObject.tag;
 
         // Log the name of the collided object
         Debug.Log("Collided with: " + collidedObject.name);
 
-        // Check the tag of the collided object and activate the corresponding GameObject
-        if (collidedObject.CompareTag("Cabbage"))
+        if (requiredIngredients.ContainsKey(ingredient))
         {
-            cabbage.SetActive(true);
-            cabbageActivated = true;
-            Debug.Log("Cabbage activated");
+            ActivateIngredientObject(ingredient);
+            UpdateIngredientCounter(ingredient);
             Destroy(collidedObject);
-            UpdateIngredientCounter("Cabbage");
-        }
-        else if (collidedObject.CompareTag("Raddish"))
-        {
-            radish.SetActive(true);
-            radishActivated = true;
-            Destroy(collidedObject);
-            UpdateIngredientCounter("Raddish");
-        }
-        else if (collidedObject.CompareTag("Egg"))
-        {
-            egg.SetActive(true);
-            eggActivated = true;
-            Destroy(collidedObject);
-            UpdateIngredientCounter("Egg");
-        }
-        else if (collidedObject.CompareTag("Rice"))
-        {
-            rice.SetActive(true);
-            riceActivated = true;
-            Destroy(collidedObject);
-            UpdateIngredientCounter("Rice");
-        }
-        else if (collidedObject.CompareTag("Pork"))
-        {
-            pork.SetActive(true);
-            porkActivated = true;
-            Destroy(collidedObject);
-            UpdateIngredientCounter("Pork");
-        }
-        else if (collidedObject.CompareTag("Fish"))
-        {
-            fish.SetActive(true);
-            fishActivated = true;
-            Destroy(collidedObject);
-            UpdateIngredientCounter("Fish");
-        }
-        else if (collidedObject.CompareTag("Chicken"))
-        {
-            chicken.SetActive(true);
-            chickenActivated = true;
-            Destroy(collidedObject);
-            UpdateIngredientCounter("Chicken");
-        }
-        else if (collidedObject.CompareTag("Prawn"))
-        {
-            prawn.SetActive(true);
-            prawnActivated = true;
-            Destroy(collidedObject);
-            UpdateIngredientCounter("Prawn");
         }
         else
         {
             ShowMessage("Wrong ingredient!");
         }
+    }
 
-        // Check if all objects are activated
-        if (cabbageActivated && radishActivated && eggActivated && riceActivated && porkActivated)
+    void ActivateIngredientObject(string ingredient)
+    {
+        switch (ingredient)
         {
-            doneButton.SetActive(true); // Activate the done button
+            case "Cabbage":
+                cabbage.SetActive(true);
+                cabbageActivated = true;
+                break;
+            case "Ginger":
+                ginger.SetActive(true);
+                gingerActivated = true;
+                break;
+            case "Egg":
+                egg.SetActive(true);
+                eggActivated = true;
+                break;
+            case "Rice":
+                rice.SetActive(true);
+                riceActivated = true;
+                break;
+            case "Pork":
+                pork.SetActive(true);
+                porkActivated = true;
+                break;
+            case "Fish":
+                fish.SetActive(true);
+                fishActivated = true;
+                break;
+            case "Chicken":
+                chicken.SetActive(true);
+                chickenActivated = true;
+                break;
+            case "Prawn":
+                prawn.SetActive(true);
+                prawnActivated = true;
+                break;
         }
     }
 
     void DeactivateAllObjects()
     {
         cabbage.SetActive(false);
-        radish.SetActive(false);
+        ginger.SetActive(true);
         egg.SetActive(false);
         rice.SetActive(false);
         pork.SetActive(false);
@@ -155,7 +137,7 @@ public class RawFoodTray : MonoBehaviour
 
         // Reset activation flags
         cabbageActivated = false;
-        radishActivated = false;
+        gingerActivated = false;
         eggActivated = false;
         riceActivated = false;
         porkActivated = false;
@@ -170,6 +152,21 @@ public class RawFoodTray : MonoBehaviour
         {
             ingredientCounters[ingredient]++;
             UpdateTaskText();
+
+            // Check if all required ingredients are activated and their counts are correct
+            bool allIngredientsMet = true;
+            foreach (var kvp in requiredIngredients)
+            {
+                if (ingredientCounters[kvp.Key] < kvp.Value)
+                {
+                    allIngredientsMet = false;
+                    break;
+                }
+            }
+            if (allIngredientsMet)
+            {
+                doneButton.SetActive(true); // Activate the done button
+            }
         }
         else
         {
@@ -190,7 +187,7 @@ public class RawFoodTray : MonoBehaviour
                 lines[i] = $"{ingredient} - {ingredientCounters[ingredient]}/{requiredIngredients[ingredient]}";
             }
         }
-        taskText.text = string.Join("\n", lines);
+        taskText.text = "Your Task:\n" + string.Join("\n", lines);
     }
 
     void ShowMessage(string message)
@@ -220,7 +217,7 @@ public class RawFoodTray : MonoBehaviour
             if (parts.Length == 3)
             {
                 string ingredient = parts[0];
-                int requiredAmount = int.Parse(parts[2]);
+                int requiredAmount = int.Parse(parts[2].Split('/')[1]);
                 requiredIngredients[ingredient] = requiredAmount;
                 ingredientCounters[ingredient] = 0; // Reset current counter for the ingredient
             }

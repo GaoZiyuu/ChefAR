@@ -12,6 +12,7 @@ TagManager:
   - Prawn
   - Chicken
   - Fish
+  - Ginger
   layers:
   - Default
   - TransparentFX
