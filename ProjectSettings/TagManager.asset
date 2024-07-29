@@ -9,6 +9,9 @@ TagManager:
   - Pork
   - Egg
   - Rice
+  - Prawn
+  - Chicken
+  - Fish
   layers:
   - Default
   - TransparentFX

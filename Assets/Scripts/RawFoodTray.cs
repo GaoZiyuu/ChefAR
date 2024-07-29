@@ -6,21 +6,27 @@ using TMPro;
 
 public class RawFoodTray : MonoBehaviour
 {
-    //gameobjects
+    // GameObjects for ingredients
     public GameObject cabbage;
-    public GameObject raddish;
+    public GameObject radish;
     public GameObject egg;
     public GameObject rice;
     public GameObject pork;
+    public GameObject chicken;
+    public GameObject prawn;
+    public GameObject fish;
 
-    //booleans to check if gameobject is set active or not
+    // Booleans to check if GameObject is set active or not
     private bool cabbageActivated = false;
     private bool radishActivated = false;
     private bool eggActivated = false;
     private bool riceActivated = false;
     private bool porkActivated = false;
+    private bool chickenActivated = false;
+    private bool prawnActivated = false;
+    private bool fishActivated = false;
 
-    //gameobject button
+    // GameObject button
     public GameObject doneButton;
 
     // Reference to the Task Text UI element
@@ -36,8 +42,28 @@ public class RawFoodTray : MonoBehaviour
         { "Pork", 0 },
         { "Chicken", 0 },
         { "Prawn", 0 },
+        { "Cabbage", 0 },
+        { "Raddish", 0 },
+        { "Egg", 0 },
         { "Rice", 0 }
     };
+    private Dictionary<string, int> requiredIngredients = new Dictionary<string, int>();
+
+    private void Start()
+    {
+        DeactivateAllObjects();
+        doneButton.SetActive(false);
+        messageBox.SetActive(false);
+
+        // Define tasks for each dish
+        dishTasks = new Dictionary<string, string>
+        {
+            { "FFC", "Fish - 0/1\nRice - 0/1\nCabbage - 0/1\nRed Raddish - 0/1\nEgg - 0/1" },
+            { "PKC", "Pork - 0/1\nRice - 0/1\nCabbage - 0/1\nRed Raddish - 0/1\nEgg - 0/1" },
+            { "CKC", "Chicken - 0/1\nRice - 0/1\nCabbage - 0/1\nRed Raddish - 0/1\nEgg - 0/1" },
+            { "EFC", "Prawn - 0/1\nRice - 0/1\nCabbage - 0/1\nRed Raddish - 0/1\nEgg - 0/1" }
+        };
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -53,32 +79,57 @@ public class RawFoodTray : MonoBehaviour
             cabbageActivated = true;
             Debug.Log("Cabbage activated");
             Destroy(collidedObject);
+            UpdateIngredientCounter("Cabbage");
         }
         else if (collidedObject.CompareTag("Raddish"))
         {
-            raddish.SetActive(true);
+            radish.SetActive(true);
             radishActivated = true;
             Destroy(collidedObject);
+            UpdateIngredientCounter("Raddish");
         }
         else if (collidedObject.CompareTag("Egg"))
         {
             egg.SetActive(true);
             eggActivated = true;
             Destroy(collidedObject);
+            UpdateIngredientCounter("Egg");
         }
         else if (collidedObject.CompareTag("Rice"))
         {
             rice.SetActive(true);
             riceActivated = true;
             Destroy(collidedObject);
+            UpdateIngredientCounter("Rice");
         }
         else if (collidedObject.CompareTag("Pork"))
         {
             pork.SetActive(true);
             porkActivated = true;
             Destroy(collidedObject);
+            UpdateIngredientCounter("Pork");
         }
-
+        else if (collidedObject.CompareTag("Fish"))
+        {
+            fish.SetActive(true);
+            fishActivated = true;
+            Destroy(collidedObject);
+            UpdateIngredientCounter("Fish");
+        }
+        else if (collidedObject.CompareTag("Chicken"))
+        {
+            chicken.SetActive(true);
+            chickenActivated = true;
+            Destroy(collidedObject);
+            UpdateIngredientCounter("Chicken");
+        }
+        else if (collidedObject.CompareTag("Prawn"))
+        {
+            prawn.SetActive(true);
+            prawnActivated = true;
+            Destroy(collidedObject);
+            UpdateIngredientCounter("Prawn");
+        }
         else
         {
             ShowMessage("Wrong ingredient!");
@@ -94,10 +145,13 @@ public class RawFoodTray : MonoBehaviour
     void DeactivateAllObjects()
     {
         cabbage.SetActive(false);
-        raddish.SetActive(false);
+        radish.SetActive(false);
         egg.SetActive(false);
         rice.SetActive(false);
         pork.SetActive(false);
+        prawn.SetActive(false);
+        fish.SetActive(false);
+        chicken.SetActive(false);
 
         // Reset activation flags
         cabbageActivated = false;
@@ -105,18 +159,21 @@ public class RawFoodTray : MonoBehaviour
         eggActivated = false;
         riceActivated = false;
         porkActivated = false;
+        fishActivated = false;
+        prawnActivated = false;
+        chickenActivated = false;
     }
 
     void UpdateIngredientCounter(string ingredient)
     {
-        if (currentTask.Contains(ingredient))
+        if (requiredIngredients.ContainsKey(ingredient))
         {
             ingredientCounters[ingredient]++;
             UpdateTaskText();
         }
         else
         {
-            ShowMessage("Wrong ingredient! Try Again");
+            ShowMessage("Wrong ingredient!");
         }
     }
 
@@ -129,7 +186,8 @@ public class RawFoodTray : MonoBehaviour
             string[] parts = lines[i].Split(' ');
             if (parts.Length == 3 && ingredientCounters.ContainsKey(parts[0]))
             {
-                lines[i] = $"{parts[0]} - {ingredientCounters[parts[0]]}/{parts[2]}";
+                string ingredient = parts[0];
+                lines[i] = $"{ingredient} - {ingredientCounters[ingredient]}/{requiredIngredients[ingredient]}";
             }
         }
         taskText.text = string.Join("\n", lines);
@@ -152,23 +210,21 @@ public class RawFoodTray : MonoBehaviour
     {
         currentTask = task;
         taskText.text = "Your Task:\n" + task;
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        DeactivateAllObjects();
-        doneButton.SetActive(false);
-        messageText.gameObject.SetActive(false);
-
-        // Define tasks for each dish
-        dishTasks = new Dictionary<string, string>
+        // Parse the task to get required ingredient amounts
+        string[] lines = task.Split('\n');
+        requiredIngredients.Clear();
+        foreach (string line in lines)
         {
-            { "FFC", "Fish - 0/1\nRice - 0/1" },
-            { "PKC", "Pork - 0/1\nRice - 0/1" },
-            { "CKC", "Chicken - 0/1\nRice - 0/1" },
-            { "EFC", "Prawn - 0/1\nRice - 0/1" }
-        };
+            string[] parts = line.Split(' ');
+            if (parts.Length == 3)
+            {
+                string ingredient = parts[0];
+                int requiredAmount = int.Parse(parts[2]);
+                requiredIngredients[ingredient] = requiredAmount;
+                ingredientCounters[ingredient] = 0; // Reset current counter for the ingredient
+            }
+        }
     }
-
 }
+

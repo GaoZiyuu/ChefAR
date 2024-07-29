@@ -21,10 +21,10 @@ public class DishRandomiser : MonoBehaviour
     // Dictionary to hold the tasks for each dish
     private Dictionary<string, string> dishTasks = new Dictionary<string, string>
     {
-        { "FFC", "Fish - 0/1\nRice - 0/1" },
-        { "PKC", "Pork - 0/1\nRice - 0/1" },
-        { "CKC", "Chicken - 0/1\nRice - 0/1" },
-        { "EFC", "Prawn - 0/1\nRice - 0/1" }
+        { "FFC", "Fish - 0/1\nRice - 0/1\nCabbage - 0/1\nRed Raddish - 0/1\nEgg - 0/1" },
+        { "PKC", "Pork - 0/1\nRice - 0/1\nCabbage - 0/1\nRed Raddish - 0/1\nEgg - 0/1" },
+        { "CKC", "Chicken - 0/1\nRice - 0/1\nCabbage - 0/1\nRed Raddish - 0/1\nEgg - 0/1" },
+        { "EFC", "Prawn - 0/1\nRice - 0/1\nCabbage - 0/1\nRed Raddish - 0/1\nEgg - 0/1" }
     };
 
     private string currentDish; // Variable to keep track of the current dish
@@ -83,6 +83,11 @@ public class DishRandomiser : MonoBehaviour
 
         // Show the task UI
         taskUI.SetActive(true);
+    }
+
+    public string GetCurrentDish()
+    {
+        return currentDish;
     }
 
 }
