@@ -70,7 +70,7 @@ public class DishRandomiser : MonoBehaviour
         nextButton.gameObject.SetActive(true);
     }
 
-    void ShowTask()
+    public void ShowTask()
     {
         // Update the task text based on the current dish
         if (dishTasks.ContainsKey(currentDish))
