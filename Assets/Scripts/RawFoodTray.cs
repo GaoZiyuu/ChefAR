@@ -168,10 +168,6 @@ public class RawFoodTray : MonoBehaviour
                 doneButton.SetActive(true); // Activate the done button
             }
         }
-        else
-        {
-            ShowMessage("Wrong ingredient!");
-        }
     }
 
     void UpdateTaskText()
