@@ -127,7 +127,7 @@ public class RawFoodTray : MonoBehaviour
     void DeactivateAllObjects()
     {
         cabbage.SetActive(false);
-        ginger.SetActive(true);
+        ginger.SetActive(false);
         egg.SetActive(false);
         rice.SetActive(false);
         pork.SetActive(false);
