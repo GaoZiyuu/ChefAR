@@ -55,14 +55,13 @@ public class RawFoodTray : MonoBehaviour
         doneButton.SetActive(false);
         messageBox.SetActive(false);
 
-        // Define tasks for each dish
-        dishTasks = new Dictionary<string, string>
-        {
-            { "FFC", "Fish - 0/1\nRice - 0/1\nCabbage - 0/1\nGinger - 0/1\nEgg - 0/1" },
-            { "PKC", "Pork - 0/1\nRice - 0/1\nCabbage - 0/1\nGinger - 0/1\nEgg - 0/1" },
-            { "CKC", "Chicken - 0/1\nRice - 0/1\nCabbage - 0/1\nGinger - 0/1\nEgg - 0/1" },
-            { "EFC", "Prawn - 0/1\nRice - 0/1\nCabbage - 0/1\nGinger - 0/1\nEgg - 0/1" }
-        };
+        // Initialize dishTasks with an empty dictionary
+        dishTasks = new Dictionary<string, string>();
+    }
+
+    public void SetDishTasks(Dictionary<string, string> tasks)
+    {
+        dishTasks = tasks;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -201,23 +200,55 @@ public class RawFoodTray : MonoBehaviour
 
     public void SetCurrentTask(string task)
     {
-        currentTask = task;
-        taskText.text = "Your Task:\n" + task;
-
-        // Parse the task to get required ingredient amounts
-        string[] lines = task.Split('\n');
-        requiredIngredients.Clear();
-        foreach (string line in lines)
+        if (dishTasks == null || dishTasks.Count == 0)
         {
-            string[] parts = line.Split(' ');
-            if (parts.Length == 3)
+            Debug.LogError("dishTasks is not initialized.");
+            return;
+        }
+
+        // Verify that the task exists in the dishTasks dictionary
+        if (dishTasks.ContainsValue(task))
+        {
+            currentTask = task;
+            taskText.text = "Your Task:\n" + task;
+
+            // Parse the task to get required ingredient amounts
+            string[] lines = task.Split('\n');
+            requiredIngredients.Clear();
+            foreach (string line in lines)
             {
-                string ingredient = parts[0];
-                int requiredAmount = int.Parse(parts[2].Split('/')[1]);
-                requiredIngredients[ingredient] = requiredAmount;
-                ingredientCounters[ingredient] = 0; // Reset current counter for the ingredient
+                string[] parts = line.Split(' ');
+                if (parts.Length == 3)
+                {
+                    string ingredient = parts[0];
+                    if (int.TryParse(parts[2].Split('/')[1], out int requiredAmount))
+                    {
+                        requiredIngredients[ingredient] = requiredAmount;
+                        ingredientCounters[ingredient] = 0; // Reset current counter for the ingredient
+                    }
+                    else
+                    {
+                        Debug.LogError("Failed to parse required amount for ingredient: " + line);
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Failed to parse line: " + line);
+                }
+            }
+
+            // Debug logging
+            Debug.Log("Current Task: " + currentTask);
+            Debug.Log("Required Ingredients:");
+            foreach (var kvp in requiredIngredients)
+            {
+                Debug.Log($"{kvp.Key}: {kvp.Value}");
             }
         }
+        else
+        {
+            Debug.LogError($"Task '{task}' is not found in dishTasks.");
+        }
     }
-}
 
+}

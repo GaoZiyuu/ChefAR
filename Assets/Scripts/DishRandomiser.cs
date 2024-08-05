@@ -16,14 +16,14 @@ public class DishRandomiser : MonoBehaviour
 
     // Arrays to hold the text strings and corresponding images
     private Sprite[] images = new Sprite[4];
-    private string[] dishNames = new string[4] { "FFC", "PKC", "CKC", "EFC" };
+    private string[] dishNames = new string[4] { "CKC", "PKC", "EFC", "FFC" };
 
     // Dictionary to hold the tasks for each dish
     private Dictionary<string, string> dishTasks = new Dictionary<string, string>
     {
+        { "CKC", "Chicken - 0/1\nRice - 0/1\nCabbage - 0/1\nGinger - 0/1\nEgg - 0/1" },
         { "FFC", "Fish - 0/1\nRice - 0/1\nCabbage - 0/1\nGinger - 0/1\nEgg - 0/1" },
         { "PKC", "Pork - 0/1\nRice - 0/1\nCabbage - 0/1\nGinger - 0/1\nEgg - 0/1" },
-        { "CKC", "Chicken - 0/1\nRice - 0/1\nCabbage - 0/1\nGinger - 0/1\nEgg - 0/1" },
         { "EFC", "Prawn - 0/1\nRice - 0/1\nCabbage - 0/1\nGinger - 0/1\nEgg - 0/1" }
     };
 
@@ -46,6 +46,15 @@ public class DishRandomiser : MonoBehaviour
             }
         }
 
+        // Initialize the RawFoodTray with dishTasks
+        if (rawFoodTray != null)
+        {
+            rawFoodTray.SetDishTasks(dishTasks);
+        }
+        else
+        {
+            Debug.LogError("RawFoodTray reference is not assigned.");
+        }
 
         // Add a listener to the button to call the Randomize function when clicked
         randomizeButton.onClick.AddListener(Randomize);
@@ -64,7 +73,10 @@ public class DishRandomiser : MonoBehaviour
 
         // Update the text and image to match the random index
         displayImage.sprite = images[randomIndex];
-        currentDish = dishNames[randomIndex];
+        currentDish = dishNames[randomIndex];  // Set the current dish key
+
+        // Debug statement to confirm correct dish
+        Debug.Log($"Randomized Dish Key: {currentDish}");
 
         // Show the next button
         nextButton.gameObject.SetActive(true);
@@ -79,9 +91,16 @@ public class DishRandomiser : MonoBehaviour
         if (dishTasks.ContainsKey(currentDish))
         {
             string task = dishTasks[currentDish];
-            taskText.text = "Your Task:\n" + dishTasks[currentDish];
+            taskText.text = "Your Task:\n" + task;
             // Assuming rawFoodTray is a reference to the RawFoodTray component
             rawFoodTray.SetCurrentTask(task);
+
+            // Debug statement to confirm task assignment
+            Debug.Log($"Dish: {currentDish}, Task: {task}");
+        }
+        else
+        {
+            Debug.LogError($"Current dish '{currentDish}' is not found in dishTasks.");
         }
     }
 
