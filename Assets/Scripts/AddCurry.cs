@@ -10,12 +10,19 @@ public class AddCurry : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (gameObject.tag == "Curry")
+        Debug.Log("OnTriggerEnter called with object: " + other.gameObject.name);
+
+        if (other.gameObject.CompareTag("Curry"))
         {
+            Debug.Log("Curry GameObject has collided.");
             curryS.SetActive(true);
-            Destroy(gameObject);
-            restartUI.SetActive(true);
+            Destroy(other.gameObject);
+            StartCoroutine(ActivateRestartUI());
             curryPot.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("The object that collided does not have the 'Curry' tag.");
         }
     }
 
@@ -23,5 +30,11 @@ public class AddCurry : MonoBehaviour
     {
         curryS.SetActive(false);
         restartUI.SetActive(false);
+    }
+
+    private IEnumerator ActivateRestartUI()
+    {
+        yield return new WaitForSeconds(2);
+        restartUI.SetActive(true);
     }
 }
